@@ -1,5 +1,5 @@
 # app/calculator.py
-from app.commands import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+from app.commands.calculator import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
 
 commands = {
     "add": AddCommand(),
@@ -11,7 +11,7 @@ commands = {
 def menu():
     print("Available commands:")
     for cmd in commands.keys():
-        print(f"- {cmd}")
+        print(f"-> {cmd}")
     print("- menu (show commands)")
     print("- exit (quit the program)")
 
@@ -31,12 +31,9 @@ def main():
             try:
                 a = float(input("Enter first number: "))
                 b = float(input("Enter second number: "))
-                result = commands[user_input].execute(a, b)
+                result = commands[user_input].execute(a, b)  # Execute with arguments
                 print(f"Result: {result}")
             except ValueError:
                 print("Invalid input. Please enter numbers only.")
         else:
             print("Unknown command. Type 'menu' to see available commands.")
-
-if __name__ == "__main__":
-    main()
