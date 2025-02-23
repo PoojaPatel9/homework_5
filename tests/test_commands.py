@@ -42,15 +42,15 @@ def test_app_menu_command(capfd, monkeypatch):
     assert str(e.value) == "Exiting...", "The app did not exit as expected"
 
 def test_add():
-    assert AddCommand().execute(5, 3) == 8
+    assert AddCommand().execute(5, 3) == 8  # Use execute() properly
 
 def test_subtract():
-    assert SubtractCommand().execute(10, 4) == 6
+    assert SubtractCommand().execute(10, 4) == 6  # Use execute() properly
 
 def test_multiply():
-    assert MultiplyCommand().execute(2, 3) == 6
+    assert MultiplyCommand().execute(2, 3) == 6  # Use execute() properly
 
 def test_divide():
-    assert DivideCommand().execute(10, 2) == 5
-    assert DivideCommand().execute(10, 0) == "Error: Division by zero"
+    assert DivideCommand().execute(10, 2) == 5  # Use execute() properly
+    assert DivideCommand().execute(10,0) == "Error: Division by zero"
     
