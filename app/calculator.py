@@ -1,4 +1,3 @@
-# app/calculator.py
 from app.commands.calculator import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
 
 commands = {
@@ -9,31 +8,44 @@ commands = {
 }
 
 def menu():
-    print("Available commands:")
-    for cmd in commands.keys():
-        print(f"-> {cmd}")
-    print("- menu (show commands)")
-    print("- exit (quit the program)")
+    """Returns the menu as a string (for testing purposes)."""
+    menu_text = "Available commands:\n"
+    menu_text += "\n".join(f"-> {cmd}" for cmd in commands.keys())
+    menu_text += "\n- menu (show commands)\n- exit (quit the program)"
+    return menu_text
+
+def process_command(user_input):
+    """Processes user input and returns output for easier testing."""
+    user_input = user_input.strip().lower()
+
+    if user_input == "exit":
+        return "Exiting the calculator. Goodbye!"
+    elif user_input == "menu":
+        return menu()
+    elif user_input in commands:
+        try:
+            a = float(input("Enter first number: "))
+            b = float(input("Enter second number: "))
+
+            # Prevent division by zero
+            if user_input == "divide" and b == 0:
+                return "Error: Division by zero is not allowed."
+
+            result = commands[user_input].execute(a, b)
+            return f"Result: {result}"
+        except ValueError:
+            return "Invalid input. Please enter numbers only."
+    else:
+        return "Unknown command. Type 'menu' to see available commands."
 
 def main():
+    """Main function to run the calculator application."""
     print("Welcome to the Command Pattern Calculator!")
-    menu()  # Show available commands
+    print(menu())  # Show available commands
 
     while True:
-        user_input = input("\nEnter command: ").strip().lower()
-
-        if user_input == "exit":
-            print("Exiting the calculator. Goodbye!")
+        user_input = input("\nEnter command: ")
+        response = process_command(user_input)
+        print(response)
+        if response == "Exiting the calculator. Goodbye!":
             break
-        elif user_input == "menu":
-            menu()
-        elif user_input in commands:
-            try:
-                a = float(input("Enter first number: "))
-                b = float(input("Enter second number: "))
-                result = commands[user_input].execute(a, b)  # Execute with arguments
-                print(f"Result: {result}")
-            except ValueError:
-                print("Invalid input. Please enter numbers only.")
-        else:
-            print("Unknown command. Type 'menu' to see available commands.")
