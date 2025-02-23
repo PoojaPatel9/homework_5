@@ -1,8 +1,7 @@
-import sys
+# app/commands/discord/__init__.py
 from app.commands import Command
-
 
 class DiscordCommand(Command):
     def execute(self):
-        print(f'I WIll send something to discord')
-        
+        return "I will send something to Discord"
+    
