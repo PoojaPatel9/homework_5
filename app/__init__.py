@@ -1,36 +1,48 @@
 import pkgutil
 import importlib
-from app.commands import CommandHandler
-from app.commands import Command
+from app.commands import CommandHandler, Command
 
 class App:
-    def __init__(self): # Constructor
+    def __init__(self):
+        """Initialize the application with a command handler."""
         self.command_handler = CommandHandler()
 
     def load_plugins(self):
-        # Dynamically load all plugins in the plugins directory
+        """Dynamically loads all available plugins."""
         plugins_package = 'app.plugins'
-        for _, plugin_name, is_pkg in pkgutil.iter_modules([plugins_package.replace('.', '/')]):
-            if is_pkg:  # Ensure it's a package
-                plugin_module = importlib.import_module(f'{plugins_package}.{plugin_name}')
-                for item_name in dir(plugin_module):
-                    item = getattr(plugin_module, item_name)
-                    try:
-                        if issubclass(item, (Command)):  # Assuming a BaseCommand class exists
-                            self.command_handler.register_command(plugin_name, item())
-                    except TypeError:
-                        continue  # If item is not a class or unrelated class, just ignore
+        package_path = plugins_package.replace('.', '/')
+
+        for _, plugin_name, _ in pkgutil.iter_modules([package_path]):
+            module = importlib.import_module(f"{plugins_package}.{plugin_name}")
+            for item_name in dir(module):
+                item = getattr(module, item_name)
+                if isinstance(item, type) and issubclass(item, Command) and item is not Command:
+                    self.command_handler.register_command(plugin_name, item())
+
     def start(self):
-        # Register commands here
+        """Starts the application with a REPL (Read-Eval-Print-Loop)."""
         self.load_plugins()
-        print("Type 'exit' to exit.")
-        while True:  #REPL Read, Evaluate, Print, Loop
-            command_input = input(">>> ").strip()
-            if command_input in ['add', 'subtract', 'multiply', 'divide']:
-                a = float(input("Enter the first number: "))
-                b = float(input("Enter the second number: "))
-                self.command_handler.execute_command(command_input, a, b)
+        print("\nSimple Plugin-Based \n Type 'menu' to menu.\n")
+        
+        while True:
+            command = input("Enter command : ").strip().lower()
+            
+            if command == "exit":
+                print("Goodbye!")
+                break
+            
+            if command in self.command_handler.commands:
+                try:
+                    # Handle arithmetic operations requiring input
+                    if command in ["add", "subtract", "multiply", "divide"]:
+                        a = float(input("Enter first number: "))
+                        b = float(input("Enter second number: "))
+                        result = self.command_handler.execute_command(command, a, b)
+                        print(f"Result: {result}")
+                    else:
+                        # Handle plugins that don't require input
+                        self.command_handler.execute_command(command)
+                except ValueError:
+                    print("Invalid input! Please enter numeric values.")
             else:
-                self.command_handler.execute_command(command_input)
-
-
+                print(f"Unknown command: {command}. Type 'exit' to quit.")

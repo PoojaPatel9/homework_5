@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 
 class Command(ABC):
-    @abstractmethod
-    def execute(self):
-        pass
+    """Base Command class defining a common interface for all commands."""
+    def execute(self, *args):
+        raise NotImplementedError("Execute method must be implemented in subclasses.")
+
 
 class CommandHandler:
     def __init__(self):

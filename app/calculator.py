@@ -1,4 +1,7 @@
-from app.plugins.calculator import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+from app.plugins.add import AddCommand
+from app.plugins.subtract import SubtractCommand
+from app.plugins.multiply import MultiplyCommand
+from app.plugins.divide import DivideCommand
 
 commands = {
     "add": AddCommand(),

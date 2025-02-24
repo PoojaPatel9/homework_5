@@ -3,7 +3,11 @@ import pytest
 from app import App
 from app.plugins.goodbye import GoodbyeCommand
 from app.plugins.greet import GreetCommand
-from app.plugins.calculator import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+from app.plugins.add import AddCommand
+from app.plugins.subtract import SubtractCommand
+from app.plugins.multiply import MultiplyCommand
+from app.plugins.divide import DivideCommand
+
 from app.calculator import process_command, menu
 
 def test_greet_command(capfd):

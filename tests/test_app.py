@@ -5,12 +5,13 @@ from app import App
 
 def test_app_start_exit_command(capfd, monkeypatch):
     """Test that the REPL exits correctly on 'exit' command."""
-    # Simulate user entering 'exit'
-    monkeypatch.setattr('builtins.input', lambda _: 'exit')
-    app = App()
+    inputs = iter(['exit'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
     with pytest.raises(SystemExit) as excinfo:
+        app = App()
         app.start()
-    assert excinfo.type == SystemExit
+    assert excinfo.value.code == 0  # Ensure it exits cleanly
+
 
 def test_app_start_unknown_command(capfd, monkeypatch):
     """Test how the REPL handles an unknown command before exiting."""
