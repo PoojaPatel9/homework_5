@@ -1,10 +1,9 @@
-"""Unit tests for the App class handling REPL commands."""
-
+'''test for commands'''
 import pytest
 from app import App
-from app.commands.goodbye import GoodbyeCommand
-from app.commands.greet import GreetCommand
-from app.commands.calculator import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
+from app.plugins.goodbye import GoodbyeCommand
+from app.plugins.greet import GreetCommand
+from app.plugins.calculator import AddCommand, SubtractCommand, MultiplyCommand, DivideCommand
 from app.calculator import process_command, menu
 
 def test_greet_command(capfd):

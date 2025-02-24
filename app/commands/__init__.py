@@ -9,13 +9,11 @@ class CommandHandler:
     def __init__(self):
         self.commands = {}
 
-    def register_command(self, command_name: str, command: Command):
-        self.commands[command_name] = command
+    def register_command(self, name, command):
+        self.commands[name] = command
 
-    def execute_command(self, command_name: str, *args):
-        """Easier to ask for forgiveness than permission (EAFP) - Use when it's going to most likely work"""
-        try:
+    def execute_command(self, command_name, *args):
+        if command_name in self.commands:
             return self.commands[command_name].execute(*args)
-        except KeyError:
+        else:
             print(f"No such command: {command_name}")
-            
