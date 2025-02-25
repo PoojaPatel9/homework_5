@@ -1,6 +1,8 @@
 '''test for commands'''
 import pytest
 from app import App
+from app.plugins.discord import DiscordCommand
+from app.plugins.email import EmailCommand
 from app.plugins.goodbye import GoodbyeCommand
 from app.plugins.greet import GreetCommand
 from app.plugins.add import AddCommand
@@ -23,6 +25,20 @@ def test_goodbye_command(capfd):
     command.execute()
     out, _ = capfd.readouterr()
     assert out == "Goodbye\n", "The GoodbyeCommand should print 'Goodbye'"
+
+def test_discord_command(capfd):
+    """Test if DiscordCommand prints 'i send message on discord'"""
+    command = DiscordCommand()
+    command.execute()
+    out, _ = capfd.readouterr()
+    assert out == "i send message on discord\n", "The discordCommand should print 'i send message on discord'"
+
+def test_email_command(capfd):
+    """Test if DiscordCommand prints 'i send mail on email'"""
+    command = EmailCommand()
+    command.execute()
+    out, _ = capfd.readouterr()
+    assert out == "i send mail on email\n", "The discordCommand should print 'i send mail on email'"
 
 def test_app_greet_command(capfd, monkeypatch):
     """Test that the REPL correctly handles the 'greet' command."""
