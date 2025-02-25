@@ -40,15 +40,3 @@ def process_command(user_input):
             return "Invalid input. Please enter numbers only."
     else:
         return "Unknown command. Type 'menu' to see available commands."
-
-def main():
-    """Main function to run the calculator application."""
-    print("Welcome to the Command Pattern Calculator!")
-    print(menu())  # Show available commands
-
-    while True:
-        user_input = input("\nEnter command: ")
-        response = process_command(user_input)
-        print(response)
-        if response == "Exiting the calculator. Goodbye!":
-            break
