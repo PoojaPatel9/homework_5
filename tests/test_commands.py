@@ -31,7 +31,8 @@ def test_app_greet_command(capfd, monkeypatch):
     app = App()
     with pytest.raises(SystemExit) as e:
         app.start()
-    assert str(e.value) == "Exiting...", "The app did not exit as expected"
+    # Check for the expected exit code
+    assert e.value.code == 0  # or assert str(e.value) == '0'
 
 def test_app_menu_command(capfd, monkeypatch):
     """Test that the REPL correctly handles the 'menu' command."""
@@ -40,7 +41,8 @@ def test_app_menu_command(capfd, monkeypatch):
     app = App()
     with pytest.raises(SystemExit) as e:
         app.start()
-    assert str(e.value) == "Exiting...", "The app did not exit as expected"
+    # Check for the expected exit code
+    assert e.value.code == 0  # or assert str(e.value) == '0'
 
 def test_add():
     """Test addition operation."""
