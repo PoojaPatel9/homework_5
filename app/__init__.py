@@ -1,5 +1,6 @@
 import pkgutil
 import importlib
+import sys
 from app.commands import CommandHandler, Command
 
 class App:
@@ -29,7 +30,7 @@ class App:
             
             if command == "exit":
                 print("Goodbye!")
-                break
+                sys.exit(0)
             
             if command in self.command_handler.commands:
                 try:
