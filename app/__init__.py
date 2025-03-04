@@ -71,7 +71,6 @@ class App:
         """Starts the application with a REPL (Read-Eval-Print-Loop)."""
         self.load_plugins()
         logging.info("Application started. Type 'exit' to quit.")
-
         logging.info("Simple Plugin-Based Calculator - Type 'exit' to quit.")
 
         try:
@@ -94,14 +93,10 @@ class App:
                     except ValueError:
                         logging.error("Invalid input! Please enter numeric values.")
                 else:
-                    logging.error(f"Unknown command: {command}")
+                    logging.error(f"Unknown command: {command}. Type 'exit' to quit.")
+                    print(f"Unknown command: {command}. Type 'exit' to quit.")  # Ensures the message is visible to user
         except KeyboardInterrupt:
             logging.info("Application interrupted. Exiting gracefully.")
             sys.exit(0)
         finally:
             logging.info("Application shutdown.")
-
-
-if __name__ == "__main__":
-    app = App()
-    app.start()
