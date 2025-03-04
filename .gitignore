@@ -2,7 +2,10 @@
 .coverage
 .pytest_cache
 *__pycache__
-#echo "myenv/" >> .gitignore
 echo "__pycache__/" >> .gitignore
 echo "*.pyc" >> .gitignore
 echo "*.pyo" >> .gitignore
+.env
+*.log
+*.py[cod]
+
