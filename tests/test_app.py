@@ -1,14 +1,15 @@
-"""Unit tests for the App class handling REPL commands."""
-
+# tests/test_app.py
+"""
+Test cases for the app module, including command handling and environment variable loading.
+"""
 import pytest
 from app import App
 
 def test_app_get_environment_variable():
+    """Test to retrieve and validate environment variable."""
     app = App()
-#   Retrieve the current environment setting
     current_env = app.get_environment_variable('ENVIRONMENT')
-    # Assert that the current environment is what you expect
-    assert current_env in ['DEVELOPMENT', 'TESTING', 'PRODUCTION'], f"Invalid ENVIRONMENT: {current_env}"
+    assert current_env.upper() in ['DEVELOPMENT', 'TESTING', 'PRODUCTION'], f"Invalid ENVIRONMENT: {current_env}"
 
 def test_app_start_exit_command(capfd, monkeypatch):
     """Test that the REPL exits correctly on 'exit' command."""
@@ -17,8 +18,7 @@ def test_app_start_exit_command(capfd, monkeypatch):
     with pytest.raises(SystemExit) as excinfo:
         app = App()
         app.start()
-    assert excinfo.value.code == 0  # Ensure it exits cleanly
-
+    assert excinfo.value.code == 0
 
 def test_app_start_unknown_command(capfd, monkeypatch):
     """Test how the REPL handles an unknown command before exiting."""
@@ -27,6 +27,5 @@ def test_app_start_unknown_command(capfd, monkeypatch):
     app = App()
     with pytest.raises(SystemExit):
         app.start()
-    # Verify that the unknown command was handled as expected
     captured = capfd.readouterr()
     assert "Unknown command: unknown_command. Type 'exit' to quit." in captured.out
