@@ -40,7 +40,7 @@ class App:
 
     def get_environment_variable(self, env_var: str = 'ENVIRONMENT'):
         """Returns a specific environment variable, defaulting to 'ENVIRONMENT'."""
-        return self.settings.get(env_var, 'PRODUCTION')
+        return self.settings.get(env_var, 'ENVIRONMENT')
 
     def load_plugins(self):
         """Dynamically loads all available plugins from the 'app.plugins' directory."""
